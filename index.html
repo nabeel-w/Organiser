@@ -38,17 +38,14 @@
         <div class="container py-2 py-sm-1">
             <a class="navbar-brand" href="#"><i class="bi bi-calendar-event me-2"></i></a>
 
-            <form class="d-flex" role="search" action="#">
+            <form class="d-flex" role="search" onsubmit="return false;">
                 <div class="container my-3">
                     <div class="row">
-                        <div class="col col-lg-9 col-sm-6">
-                            <input class="form-control" id="search-input" type="search" placeholder="Search Event" aria-label="Search">
+                        <div class="col col-lg-11 col-sm-6">
+                            <input class="form-control" id="search-input" type="search" autocomplete="off" placeholder='Search Event' aria-label="Search">
                             <div class="dropdown">
                                 <ul id="search-suggestions" class="dropdown-menu"></ul>
                             </div>
-                        </div>
-                        <div class="col-2 ps-0">
-                            <button class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i></button>
                         </div>
                         <div class="col-1 ms-0 ps-0">
                             <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addEvent"><i
@@ -71,30 +68,29 @@
                     <div class="modal-body">
                         <div class="container">
                             <div class="row">
-                                <div class="col col-lg-6 col-sm-12">
+                                <div class="col col-lg-6 col-md-12 col-sm-12">
                                     <label for="name">Event Name</label>
                                     <input class="form-control" type="text" id="name-input" autocomplete="off">
                                 </div>
-                                <div class="col col-lg-6 col-sm-12">
+                                <div class="col col-lg-6 col-md-12 col-sm-12">
                                     <label for="date">Date</label>
                                     <input type="date" class="col-6 form-control" id="date-input">
                                 </div>
-                                <div class="col col-lg-6 col-sm-12">
+                                <div class="col col-lg-6 col-md-12 col-sm-12">
                                     <label for="time" class="col-sm-6">Time</label>
                                     <input class="col-sm-6 form-control" id="time-input" type="time">
                                 </div>
-                                <div class="col col-lg-6 col-sm-12">
+                                <div class="col col-lg-6 col-md-12 col-sm-12">
                                     <label for="location">Location</label>
                                     <input type="text" id="location-input" data-bs-toggle="dropdown"
-                                        class="form-control col-sm-6" autocomplete="off">
+                                        class="form-control col-sm-6" autocomplete="off" placeholder="Select from dropdown">
                                     <div class="dropdown">
                                         <ul id="location-suggestions" class="dropdown-menu"></ul>
                                     </div>
                                 </div>
-                                <div class="col col-lg-6 col-sm-12">
+                                <div class="col col-lg-6 col-md-12 col-sm-12">
                                     <label for="note">Event Description</label>
-                                    <textarea name="edescription" id="note-input" class="form-control" cols="30"
-                                        rows="10" autocomplete="off"></textarea>
+                                    <textarea name="edescription" id="note-input" class="form-control" rows="5" autocomplete="off" placeholder="Optional"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -114,7 +110,9 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Event</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <a href="index.html">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </a>   
                     </div>
                     <div class="modal-body">
                         <div class="container">
@@ -134,7 +132,7 @@
                                 <div class="col col-lg-6 col-sm-12">
                                     <label for="location">Location</label>
                                     <input type="text" id="location-edit" data-bs-toggle="dropdown"
-                                        class="form-control col-sm-6" autocomplete="off">
+                                        class="form-control col-sm-6" autocomplete="off" placeholder="Select from dropdown">
                                     <div class="dropdown">
                                         <ul id="edit-location-suggestions" class="dropdown-menu"></ul>
                                     </div>
@@ -169,6 +167,7 @@
                         <div id="view-detail" class="container"></div>
                     </div>
                     <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-primary">Share</button>
                         <button type="button" data-bs-toggle="modal" data-bs-target="#editEvent" class="btn btn-outline-secondary">Edit</button>
                         <button type="button" data-bs-toggle="modal" data-bs-target="#editEvent" class="btn btn-outline-danger">Delete</button>
                     </div>

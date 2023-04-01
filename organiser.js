@@ -1,4 +1,4 @@
-
+const view=document.getElementById("view-event");
 const addEvent = document.getElementById("add-event-btn");
 const eventList= document.getElementById("event-list");
 const editBtn=document.getElementById("edit-event-btn");
@@ -34,7 +34,7 @@ function displayEvents(jsonData){
                         <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">${name}</h3>
                         <ul class="d-flex list-unstyled mt-auto">
                             <li class="me-auto">
-                                <button class="btn btn-primary" id="${jsonData[index].id}" data-bs-toggle="modal" data-bs-target="#view-event"><i class="bi bi-calendar-x me-2"></i>View</button>
+                                <button class="btn btn-primary" id="${jsonData[index].id}" data-bs-toggle="modal" data-bs-target="#view-event">View</button>
                             </li>
                             <li class="d-flex align-items-center me-2">
                                 <small>${location}</small>
@@ -172,26 +172,36 @@ input.addEventListener('input',()=>{
       esuggestions.innerHTML = '';
     }
   });
-//Search Auto Complete
-// search.addEventListener('input',()=>{
-//     var query=search.value;
-//     const parsedData=JSON.parse(storedData);
-//     if(query.length>2){
-//         for(let index=0;index<parsedData.length;index){
-//             if(parsedData[index].name==query||parsedData[index].date==query||parsedData[index].location==query){
-//                 searchSuggest.classList.add('show');
-//                 searchSuggest.innerHTML='';
-//                 var li=document.createElement('li');
-//                 li.className="dropdown-item";
-//                 var name=parsedData[index].name;
-//                 li.innerHTML=`${name}`;
-//                 li.addEventListener('click',()=>{
-//                     showEvent(parsedData[index].id);
-//                 })
-//             }
-//         }
-//     }
-// })
+////Search Function
+search.addEventListener('input',()=>{
+    var query=search.value;
+    query=query.toLowerCase();
+    const parsedData=JSON.parse(storedData);
+    if(query.length>2){
+        for(let index=0;index<parsedData.length;index++){
+            if(parsedData[index].name.toLowerCase().includes(query)||parsedData[index].date.toLowerCase().includes(query)||parsedData[index].location.toLowerCase().includes(query)){
+                console.log(parsedData[index],query);
+                searchSuggest.classList.add('show');
+                searchSuggest.innerHTML='';
+                var li=document.createElement('li');
+                li.className="dropdown-item";
+                var name=parsedData[index].name;
+                var date=parsedData[index].date;
+                li.innerHTML=`${name} ${date} <button class="btn btn-primary ms-auto" data-bs-toggle="modal" data-bs-target="#view-event">View</button>`;
+                searchSuggest.appendChild(li);
+                li.addEventListener('click',()=>{
+                    
+                    showEvent(parsedData[index].id);
+                })
+            }
+        }
+        
+    }
+    else{
+        searchSuggest.innerHTML = '';
+        searchSuggest.classList.remove('show');
+    }
+})
 //Dynamically Calling Events from storage
 if(storedData){
     const parsedData=JSON.parse(storedData);
@@ -261,9 +271,12 @@ function editEvent(id){
                 parsedData[index].date=date;
                 parsedData[index].time=time;
                 parsedData[index].note=note;
-                parsedData[index].location=location;
-                parsedData[index].latitiude=lati;
-                parsedData[index].long=lon;
+                if(!(parsedData[index].location==location)){
+                    console.log("changing location");
+                    parsedData[index].location=location;
+                    parsedData[index].latitiude=lati;
+                    parsedData[index].long=lon;
+                }
                 console.log(parsedData[index]);
                 const updateData=JSON.stringify(parsedData);
                 localStorage.setItem('Events',updateData);
@@ -272,7 +285,17 @@ function editEvent(id){
         }
     }
 }
-//Search Function
+//Share Function
+function shareEvent(id){
+    const parsedData=JSON.parse(storedData);
+    for(let index=0;index<parsedData.length;index++){
+        if(parsedData[index].id==id){
+            var shareMessage=`Join Me for this event.\n${parsedData[index].name}\nLocation: ${parsedData[index].location}\nDate: ${parsedData[index].date}      Time: ${parsedData[index].time}`
+            //alert(shareMessage);
+           alert(`Copy The Following Message:\n\n${shareMessage}`);
+        }
+    }
+}
 
 //Buttons
 const buttons=document.querySelectorAll("button");
@@ -284,10 +307,6 @@ buttons.forEach(button=>{
         //console.log(cass[1]);
         //console.log(Id);
         switch (cass) {
-            case "btn-outline-success":
-            case "bi-search":
-                //Search
-                break;
             case "btn-primary":
                 //View Event
                 showEvent(Id);
@@ -301,6 +320,9 @@ buttons.forEach(button=>{
                 //Edit Event
                 editEvent(Id);
                 console.log("edit");
+                break;
+            case "btn-outline-primary":
+                shareEvent(Id);
                 break;
             default:
                 break;
