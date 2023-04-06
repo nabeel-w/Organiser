@@ -167,7 +167,7 @@
                         <div id="view-detail" class="container"></div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-primary">Share</button>
+                        <button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#share-modal">Share</button>
                         <button type="button" data-bs-toggle="modal" data-bs-target="#editEvent" class="btn btn-outline-secondary">Edit</button>
                         <button type="button" data-bs-toggle="modal" data-bs-target="#editEvent" class="btn btn-outline-danger">Delete</button>
                     </div>
@@ -175,6 +175,21 @@
             </div>
     </div>
     </div>
+    <!-- Share Modal  -->
+    <div class="modal" tabindex="-1" id="share-modal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Share Text</h5>
+              <a href="index.html">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </a>
+            </div>
+            <div class="modal-body" id="share-body">
+            </div>
+          </div>
+        </div>
+      </div>
     <div class="container">
         <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5" id="event-list"></div>
     </div>

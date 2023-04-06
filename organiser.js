@@ -6,6 +6,8 @@ const alertPlaceholder=document.getElementById("liveAlertPlaceholder");
 const viewEvent=document.getElementById("view-detail");
 const foot1=document.querySelector(".btn-outline-secondary");
 const foot2=document.querySelector(".btn-outline-danger");
+const foot3=document.querySelector(".btn-outline-info");
+const shareText=document.getElementById("share-body");
 const editModal= document.getElementById("")
 var suggestions = document.getElementById('location-suggestions');
 var esuggestions=document.getElementById('edit-location-suggestions');
@@ -229,6 +231,7 @@ function showEvent(id){
             `;
             foot1.setAttribute('id',id);
             foot2.setAttribute('id',id);
+            foot3.setAttribute('id',id);
             var map = L.map('map').setView([lat,long], 13);
             L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 19,
@@ -290,9 +293,10 @@ function shareEvent(id){
     const parsedData=JSON.parse(storedData);
     for(let index=0;index<parsedData.length;index++){
         if(parsedData[index].id==id){
-            var shareMessage=`Join Me for this event.\n${parsedData[index].name}\nLocation: ${parsedData[index].location}\nDate: ${parsedData[index].date}      Time: ${parsedData[index].time}`
+            var shareMessage=`Join Me for this event.<br>${parsedData[index].name}<br>Location: ${parsedData[index].location}<br>Date: ${parsedData[index].date}     Time: ${parsedData[index].time}`
             //alert(shareMessage);
-           alert(`Copy The Following Message:\n\n${shareMessage}`);
+           //alert(`Copy The Following Message:\n\n${shareMessage}`);
+           shareText.innerHTML=`<h6>Copy the following text</h6><p>${shareMessage}</p>`
         }
     }
 }
@@ -321,7 +325,7 @@ buttons.forEach(button=>{
                 editEvent(Id);
                 console.log("edit");
                 break;
-            case "btn-outline-primary":
+            case "btn-outline-info":
                 shareEvent(Id);
                 break;
             default:
